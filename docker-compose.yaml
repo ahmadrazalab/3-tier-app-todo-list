@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: todo_db
+    ports:
+      - "5432:5432"
+
+
+
+###################
+# version: '3'
+
+# services:
+#   frontend:
+#     build: ./frontend
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - backend
+
+#   backend:
+#     build: ./backend
+#     ports:
+#       - "5000:5000"
+#     depends_on:
+#       - db
+
+#   db:
+#     image: postgres
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: todo_db
+#     ports:
+#       - "5432:5432"
+#     command: >
+#       sh -c "
+#       sleep 10 &&
+#       psql -U postgres -d todo_db -c 'CREATE TABLE IF NOT EXISTS todos (id SERIAL PRIMARY KEY, title TEXT NOT NULL);'
+#       "
